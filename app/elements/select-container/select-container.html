@@ -1,0 +1,44 @@
+<dom-module id="select-container">
+
+  <template>
+
+  <style>
+   :host {
+        display: none;
+      }
+
+      :host([active]) {
+        display: block;
+      }
+
+      p {
+        line-height: 33.18px;
+        white-space: pre-wrap;
+      }
+    </style>
+
+  Select container element active now 
+  
+
+  </template>
+
+  <script>
+    Polymer({
+       properties: {
+
+        active: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        }
+    },
+      is: 'select-container',
+      ready:function(){
+        console.log("element is ready");
+      },
+
+
+    });
+  </script>
+
+</dom-module>

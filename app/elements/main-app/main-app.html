@@ -1,0 +1,103 @@
+<link rel="import" href="../../bower_components/carbon-route/carbon-location.html">
+<link rel="import" href="../../bower_components/carbon-route/carbon-route.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../select-container/select-container.html">
+<link rel="import" href="../controls-container/controls-container.html">
+
+
+
+<dom-module id="main-app">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+      a {
+        color: black;
+        text-decoration: none;
+        margin-right: 8px;
+        font-size: 18px;
+      }
+
+      .iron-selected {
+        text-decoration: underline;
+      }
+
+      nav {
+        height: 65px;
+        margin: 0 auto;
+        text-align: right;
+      }
+
+      main {
+        width: 900px;
+        margin: 0 auto;
+        font-size: 21px;
+        font-family: Georgia;
+      }
+
+      h2 {
+        font-family: sans-serif;
+      }
+    </style>
+
+    <carbon-location route="{{route}}" use-hash-as-path></carbon-location>
+    <carbon-route route="{{route}}"
+                  pattern="/:tab"
+                  data="{{tabsData}}"
+                  ></carbon-route>
+   <carbon-route route="{{route}}"
+                      pattern="/controls"
+                      active = "{{controlsTab}}"></carbon-route>
+
+    <carbon-route route="{{route}}"
+                      pattern="/selects"
+                      active = "{{selectsTab}}"></carbon-route>
+         
+    <nav>
+      <!-- nav menu -->
+      <iron-selector selected="{{tabsData.tab}}" attr-for-selected="data-page">
+        <a data-page="selects" href="#/selects">selects</a>
+        <a data-page="controls" href="#/controls">controls</a>
+
+      </iron-selector>
+    </nav>
+    <main>
+      <select-container active ="{{selectsTab}}" ></select-container>
+      <controls-container active ="{{controlsTab}}" ></controls-container>
+
+    </main>
+
+
+  </template>
+
+  <script>
+
+    Polymer({
+
+      is: 'main-app',
+
+      observers: [
+        '_updateScroll(route)'
+      ],
+
+      attached: function() {
+/*        console.log(this.categoryTail);
+*/        if (!this.route.path) {
+          //this.set('route.path', '/art/list');
+        }
+      },
+      _updateScroll: function() {
+        window.scroll(0, 0);
+      },
+      ready:function(){
+        console.log("Element initialized");
+      }
+
+    });
+  </script>
+
+</dom-module>

@@ -1,0 +1,43 @@
+<dom-module id="controls-container">
+
+  <template>
+
+  <style>
+   :host {
+        display: none;
+      }
+
+      :host([active]) {
+        display: block;
+      }
+
+      p {
+        line-height: 33.18px;
+        white-space: pre-wrap;
+      }
+    </style>
+
+controls container element active now
+
+  </template>
+
+  <script>
+    Polymer({
+       properties: {
+
+        active: {
+          type: Boolean,
+          value: false,
+          reflectToAttribute: true
+        }
+    },
+      is: 'controls-container',
+      ready:function(){
+        console.log("controls element  is ready");
+      },
+
+
+    });
+  </script>
+
+</dom-module>
