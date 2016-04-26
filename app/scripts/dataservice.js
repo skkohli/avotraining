@@ -6,9 +6,9 @@ var dataSingleton = (function () {
    }
    
    return {
-     controlsList: {},
+     controlsData: {},
      setObject: function(ob){
-      console.log( "i will set object data" );
+     this.controlsList = ob;
     },
     getData : function (key) {
       console.log( "i will fetch data" );
@@ -30,7 +30,4 @@ return {
 
 })();
 
-var dataServiceOb = dataSingleton.getInstance();
-var dataServiceObOne = dataSingleton.getInstance();
-console.log(dataServiceOb === dataServiceObOne);
-dataServiceOb.getData('asdf');
+

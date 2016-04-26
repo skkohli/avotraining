@@ -1,7 +1,6 @@
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <dom-module id="select-container">
-
   <template>
-
   <style>
    :host {
         display: none;
@@ -16,29 +15,29 @@
         white-space: pre-wrap;
       }
     </style>
-
-  Select container element active now 
-  
-
+    <paper-button raised class="custom green"  on-tap="showData">Show Data</paper-button>
   </template>
 
   <script>
     Polymer({
+      is: 'select-container',
        properties: {
-
         active: {
           type: Boolean,
           value: false,
           reflectToAttribute: true
         }
-    },
-      is: 'select-container',
-      ready:function(){
-        console.log("element is ready");
       },
-
-
+      showData:function(){
+       this.dataServiceOb = dataSingleton.getInstance();
+       console.log(this.dataServiceOb.controlsList);;   
+      },
+      ready:function(){
+/*            this.somedata = new Polymer.IronMetaQuery({key: 'datakey'}).value;
+*/                  
+      },
     });
+    
   </script>
 
 </dom-module>

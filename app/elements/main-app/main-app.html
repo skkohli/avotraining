@@ -1,10 +1,11 @@
 <link rel="import" href="../../bower_components/carbon-route/carbon-location.html">
 <link rel="import" href="../../bower_components/carbon-route/carbon-route.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
 <link rel="import" href="../select-container/select-container.html">
 <link rel="import" href="../controls-container/controls-container.html">
-
-
+<script src = "../../scripts/dataservice.js"></script>
 
 <dom-module id="main-app">
 
@@ -43,13 +44,22 @@
         font-family: sans-serif;
       }
     </style>
-
+    <iron-ajax
+      auto
+      url="http://localhost:5000/controls.json"
+      handle-as="json"
+      last-response="{{controlsData}}"
+      on-response = "responseHandler">
+    </iron-ajax>
+<!--     <iron-meta key = "datakey" value = "{{dataServiceOb}}"></iron-meta>
+ -->
     <carbon-location route="{{route}}" use-hash-as-path></carbon-location>
     <carbon-route route="{{route}}"
                   pattern="/:tab"
                   data="{{tabsData}}"
                   ></carbon-route>
-   <carbon-route route="{{route}}"
+
+    <carbon-route route="{{route}}"
                       pattern="/controls"
                       active = "{{controlsTab}}"></carbon-route>
 
@@ -62,18 +72,13 @@
       <iron-selector selected="{{tabsData.tab}}" attr-for-selected="data-page">
         <a data-page="selects" href="#/selects">selects</a>
         <a data-page="controls" href="#/controls">controls</a>
-
       </iron-selector>
     </nav>
     <main>
       <select-container active ="{{selectsTab}}" ></select-container>
       <controls-container active ="{{controlsTab}}" ></controls-container>
-
     </main>
-
-
   </template>
-
   <script>
 
     Polymer({
@@ -83,7 +88,12 @@
       observers: [
         '_updateScroll(route)'
       ],
-
+      properties:{
+        dataServiceOb:{
+          type:Object,
+          value:{foo:"bar"}
+        }
+      },
       attached: function() {
 /*        console.log(this.categoryTail);
 */        if (!this.route.path) {
@@ -94,7 +104,11 @@
         window.scroll(0, 0);
       },
       ready:function(){
-        console.log("Element initialized");
+         this.dataServiceOb = dataSingleton.getInstance();
+      },
+      responseHandler:function(e,details){
+        this.dataServiceOb.setObject(details.xhr.response); 
+        console.log(this.dataServiceOb.controlsList);
       }
 
     });
