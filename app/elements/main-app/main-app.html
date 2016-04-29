@@ -5,6 +5,7 @@
 <link rel="import" href="../../bower_components/iron-meta/iron-meta.html">
 <link rel="import" href="../select-container/select-container.html">
 <link rel="import" href="../controls-container/controls-container.html">
+
 <script src = "../../scripts/dataservice.js"></script>
 
 <dom-module id="main-app">
@@ -51,8 +52,16 @@
       last-response="{{controlsData}}"
       on-response = "responseHandler">
     </iron-ajax>
-<!--     <iron-meta key = "datakey" value = "{{dataServiceOb}}"></iron-meta>
- -->
+
+     <iron-ajax
+      auto
+      url="http://localhost:5000/test.json"
+      handle-as="json"
+      last-response="{{test}}">
+    </iron-ajax>
+
+    <iron-meta key = "datakey" value = "{{dataServiceOb}}"></iron-meta>
+
     <carbon-location route="{{route}}" use-hash-as-path></carbon-location>
     <carbon-route route="{{route}}"
                   pattern="/:tab"
@@ -75,6 +84,7 @@
       </iron-selector>
     </nav>
     <main>
+    
       <select-container active ="{{selectsTab}}" ></select-container>
       <controls-container active ="{{controlsTab}}" ></controls-container>
     </main>
@@ -84,15 +94,14 @@
     Polymer({
 
       is: 'main-app',
-
       observers: [
         '_updateScroll(route)'
       ],
       properties:{
         dataServiceOb:{
           type:Object,
-          value:{foo:"bar"}
-        }
+          value: {}, 
+        },
       },
       attached: function() {
 /*        console.log(this.categoryTail);
@@ -108,7 +117,7 @@
       },
       responseHandler:function(e,details){
         this.dataServiceOb.setObject(details.xhr.response); 
-        console.log(this.dataServiceOb.controlsList);
+      
       }
 
     });

@@ -1,1 +1,28 @@
-[{"name":"Name","type":"text","checked":false,"val":null},{"name":"age","type":"number","checked":false,"val":null}]
+[{
+"label":"Name",
+"type":"text",
+"id":"name" ,
+"attribool":[],
+"attrib":[],
+"validator":"validateName",
+"events":[]
+},
+{
+"label":"Money Input",
+"type":"money-input",
+"id":"mon-input" ,
+"attribool":["raised","toggles"],
+"attrib":[{"icon":"favorite"}],
+"validator":"validatemail",
+"events":[{"ontap":"callServer"}]
+},
+{
+"label":"date picker",
+"type":"date-pickers",
+"id":"date-picker" ,
+"attribool":["raised","toggles"],
+"attrib":[{"icon":"favorite"}],
+"validator":"validatemail",
+"events":[{"ontap":"callServer"}]
+}
+]

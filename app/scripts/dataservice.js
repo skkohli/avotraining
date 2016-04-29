@@ -4,17 +4,17 @@ var dataSingleton = (function () {
    function privateMethod(){
      console.log( "private" );
    }
-   
    return {
-     controlsData: {},
-     setObject: function(ob){
+     controlsList: [{label:"asdf1"},{label:"asfdasdf1"}],
+    setObject: function(ob){
      this.controlsList = ob;
     },
     getData : function (key) {
-      console.log( "i will fetch data" );
+      return this.controlsList[key];
     },
     setData: function (key,val) {
-      return privateRandomNumber;
+      this.controlsList[key] = val;
+      return this;
     },
 
   };
