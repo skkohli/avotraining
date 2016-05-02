@@ -45,6 +45,7 @@
         font-family: sans-serif;
       }
     </style>
+    <button on-tap = "callme">Call me</button>
     <iron-ajax
       auto
       url="http://localhost:5000/controls.json"
@@ -85,7 +86,7 @@
     </nav>
     <main>
     
-      <select-container active ="{{selectsTab}}" ></select-container>
+      <select-container  controls-ob = "{{dataServiceOb}}" active ="{{selectsTab}}" ></select-container>
       <controls-container active ="{{controlsTab}}" ></controls-container>
     </main>
   </template>
@@ -100,8 +101,15 @@
       properties:{
         dataServiceOb:{
           type:Object,
-          value: {}, 
+          value: {controlsList:[]}, 
+          notify:true
         },
+      },
+      observers:[
+        'controlsListChanged(dataServiceOb.*)'
+      ],
+      controlsListChanged:function(controlsListUpdated){
+        console.log('changed',this.dataServiceOb);
       },
       attached: function() {
 /*        console.log(this.categoryTail);
@@ -113,11 +121,22 @@
         window.scroll(0, 0);
       },
       ready:function(){
+        var el = document.createElement('carbon-route');
+        console.log(el);
          this.dataServiceOb = dataSingleton.getInstance();
       },
       responseHandler:function(e,details){
         this.dataServiceOb.setObject(details.xhr.response); 
-      
+        console.log('changing object property');
+        //this.dataServiceOb.controlsList = details.xhr.response;
+        this.notifyPath('dataServiceOb.controlsList', this.dataServiceOb.controlsList);
+        console.log(this.dataServiceOb);
+      },
+      _resp:function(){
+        console.log('changed',this.dataServiceOb);
+      },
+      callme:function(){
+        console.log('called the call me fun',this.dataServiceOb);
       }
 
     });
